@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Antrian SPMB - SMA Negeri 1 Magetan</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="header-left">
+                <div class="logo">
+                    <img src="https://via.placeholder.com/50x50/2C3E50/FFFFFF?text=SMAN1MG" alt="Logo SMA Negeri 1 Magetan">
+                    <div class="logo-text">
+                        <h1>SMA Negeri 1 Magetan</h1>
+                        <p>Sistem Antrian SPMB</p>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="datetime">
+                    <div id="current-date"></div>
+                    <div id="current-time"></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Panel Utama: Antrian Saat Ini -->
+            <div class="main-panel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-user-clock"></i> Antrian Saat Ini</h2>
+                </div>
+                <div class="current-queue">
+                    <div class="queue-number-container">
+                        <div class="queue-label">Nomor Antrian</div>
+                        <div class="queue-number" id="current-queue-number">--</div>
+                    </div>
+                    <div class="queue-destination">
+                        <div class="queue-label">Operator Tujuan</div>
+                        <div class="queue-operator" id="current-queue-operator">--</div>
+                    </div>
+                    <div class="queue-instruction">
+                        <i class="fas fa-arrow-circle-right"></i>
+                        <span id="queue-instruction-text">Silahkan menunggu pemanggilan</span>
+                    </div>
+                </div>
+                
+                <!-- Riwayat Pemanggilan -->
+                <div class="history-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-history"></i> Riwayat Pemanggilan</h3>
+                    </div>
+                    <div class="history-list" id="history-list">
+                        <!-- Riwayat akan ditampilkan di sini -->
+                        <div class="history-empty">Belum ada riwayat pemanggilan</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel Kontrol -->
+            <div class="control-panel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-tasks"></i> Panel Kontrol Operator</h2>
+                </div>
+                
+                <!-- Form Pengaturan Antrian -->
+                <div class="control-section">
+                    <h3><i class="fas fa-cog"></i> Atur Antrian</h3>
+                    <div class="form-group">
+                        <label for="queue-number"><i class="fas fa-hashtag"></i> Nomor Antrian</label>
+                        <input type="number" id="queue-number" min="1" max="999" value="1">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="queue-operator"><i class="fas fa-user-tie"></i> Operator Tujuan</label>
+                        <select id="queue-operator">
+                            <option value="1">Operator 1 - Pendaftaran</option>
+                            <option value="2">Operator 2 - Verifikasi Dokumen</option>
+                            <option value="3">Operator 3 - Wawancara</option>
+                            <option value="4">Operator 4 - Tes Potensi Akademik</option>
+                            <option value="5">Operator 5 - Tes Bakat Minat</option>
+                            <option value="6">Operator 6 - Konsultasi Jurusan</option>
+                            <option value="7">Operator 7 - Pembayaran</option>
+                            <option value="8">Operator 8 - Pengambilan Kartu</option>
+                        </select>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="call-button" class="btn-call">
+                            <i class="fas fa-bullhorn"></i> Panggil Antrian
+                        </button>
+                        <button id="reset-button" class="btn-reset">
+                            <i class="fas fa-redo"></i> Reset Antrian
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Daftar Operator -->
+                <div class="control-section">
+                    <h3><i class="fas fa-users"></i> Daftar Operator</h3>
+                    <div class="operator-list">
+                        <div class="operator-item" data-operator="1">
+                            <div class="operator-number">1</div>
+                            <div class="operator-info">
+                                <div class="operator-name">Operator 1</div>
+                                <div class="operator-desc">Pendaftaran</div>
+                            </div>
+                        </div>
+                        <div class="operator-item" data-operator="2">
+                            <div class="operator-number">2</div>
+                            <div class="operator-info">
+                                <div class="operator-name">Operator 2</div>
+                                <div class="operator-desc">Verifikasi Dokumen</div>
+                            </div>
+                        </div>
+                        <div class="operator-item" data-operator="3">
+                            <div class="operator-number">3</div>
+                            <div class="operator-info">
+                                <div class="operator-name">Operator 3</div>
+                                <div class="operator-desc">Wawancara</div>
+                            </div>
+                        </div>
+                        <div class="operator-item" data-operator="4">
+                            <div class="operator-number">4</div>
+                            <div class="operator-info">
+                                <div class="operator-name">Operator 4</div>
+                                <div class="operator-desc">Tes Potensi Akademik</div>
+                            </div>
+                        </div>
+                        <div class="operator-item" data-operator="5">
+                            <div class="operator-number">5</div>
+                            <div class="operator-info">
+                                <div class="operator-name">Operator 5</div>
+                                <div class="operator-desc">Tes Bakat Minat</div>
+                            </div>
+                        </div>
+                        <div class="operator-item" data-operator="6">
+                            <div class="operator-number">6</div>
+                            <div class="operator-info">
+                                <div class="operator-name">Operator 6</div>
+                                <div class="operator-desc">Konsultasi Jurusan</div>
+                            </div>
+                        </div>
+                        <div class="operator-item" data-operator="7">
+                            <div class="operator-number">7</div>
+                            <div class="operator-info">
+                                <div class="operator-name">Operator 7</div>
+                                <div class="operator-desc">Pembayaran</div>
+                            </div>
+                        </div>
+                        <div class="operator-item" data-operator="8">
+                            <div class="operator-number">8</div>
+                            <div class="operator-info">
+                                <div class="operator-name">Operator 8</div>
+                                <div class="operator-desc">Pengambilan Kartu</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>Sistem Antrian SPMB SMA Negeri 1 Magetan &copy; <span id="current-year"></span> - Developed with <i class="fas fa-heart"></i> for better service</p>
+        </footer>
+    </div>
+
+    <!-- Audio untuk panggilan antrian -->
+    <audio id="announcement-sound" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/286/286-preview.mp3" type="audio/mp3">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
